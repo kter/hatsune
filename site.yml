@@ -1,0 +1,9 @@
+- hosts: jenkins
+  vars:
+    - jenkins_hostname: jenkins.kter.jp
+    - jenkins_package_state: present
+    - java_packages: openjdk-8-jdk
+  roles:
+    - role: geerlingguy.java
+    - role: geerlingguy.jenkins
+      become: true
