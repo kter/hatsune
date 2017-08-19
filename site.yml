@@ -7,4 +7,5 @@
     - role: geerlingguy.java
     - role: geerlingguy.jenkins
     - role: geerlingguy.ruby
+    - role: geerlingguy.git
       become: true
