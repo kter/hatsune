@@ -9,3 +9,8 @@
     - role: geerlingguy.ruby
     - role: geerlingguy.git
       become: true
+  tasks:
+    - name: pcapのライブラリをインストール
+      apt:
+        name: libpcap-dev
+        state: present
