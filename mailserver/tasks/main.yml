@@ -44,6 +44,14 @@
     dest: /etc/dovecot/conf.d/10-ssl.cf
   notify:
     - Dovecotサービスの再起動
+- name: aliasesファイルを配置
+  lineinfile:
+    dest: /etc/aliases
+    line: "{{ item.user }}: {{ item.alias }}"
+    regexp: "^{{ item.user }}:"
+  with_items: '{{aliases}}'
+  notify:
+    - aliases再構築
 #- name: Firewalldでメールサーバーで使用するポートを公開状態に設定
 #  firewalld:
 #    port: "{{ item }}/tcp"

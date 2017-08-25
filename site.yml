@@ -7,7 +7,6 @@
       - slack
     - mailserver_smtpd_banner: $myhostname ESMTP yudeazuki
     - mailserver_domain: kter.jp
-    - mailserver_hostname: mail.kter.jp
   roles:
     - role: geerlingguy.java
     - role: geerlingguy.jenkins
@@ -16,6 +15,15 @@
     - role: geerlingguy.certbot
     - role: mailserver
       tags: mailserver
+      aliases:
+        - { user: root, alias: me }
+        - { user: kter, alias: tomohico.takahashi@gmail.com }
+        - { user: me, alias: tomohico.takahashi@gmail.com }
+        - { user: aws2, alias: me }
+        - { user: aws3, alias: me }
+        - { user: aws4, alias: me }
+        - { user: aws5, alias: me }
+        - { user: shinkansen, alias: me }
       become: true
   tasks:
     - name: pcapのライブラリをインストール
