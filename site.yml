@@ -5,12 +5,16 @@
     - java_packages: openjdk-8-jdk
     - jenkins_plugins:
       - slack
+    - mailserver_smtpd_banner: $myhostname ESMTP yudeazuki
+    - mailserver_domain: kter.jp
   roles:
     - role: geerlingguy.java
     - role: geerlingguy.jenkins
     - role: geerlingguy.ruby
     - role: geerlingguy.git
     - role: geerlingguy.certbot
+    - role: mailserver
+      tags: mailserver
       become: true
   tasks:
     - name: pcapのライブラリをインストール

@@ -1,0 +1,10 @@
+---
+#- name: Firewalldサービスの再起動
+#  service:
+#    name: firewalld
+#    state: restarted
+- name: Postfixサービスの再起動
+  service:
+    name: postfix
+    state: restarted
+
