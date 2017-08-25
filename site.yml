@@ -11,6 +11,8 @@
     - role: geerlingguy.ruby
     - role: geerlingguy.git
     - role: geerlingguy.certbot
+    - role: mailserver
+      tags: mailserver
       become: true
   tasks:
     - name: pcapのライブラリをインストール
