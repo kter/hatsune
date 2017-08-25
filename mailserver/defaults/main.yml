@@ -1,2 +1,14 @@
 ---
-# defaults file for mailserver
+mailserver_domain: example.com
+mailserver_hostname: mail.{{ mailserver_domain }}
+mailserver_smtpd_banner: $myhostname ESMTP $mail_name
+mailserver_mydestination: $myhostname, localhost.$mydomain, localhost, $mydomain, mail.$mydomain$
+mailserver_smtpd_tls_cert_file: /etc/letsencrypt/live/{{ mailserver_hostname }}/fullchain.pem
+mailserver_smtpd_tls_key_file: /etc/letsencrypt/live/{{ mailserver_hostname }}/privkey.pem
+mailserver_smtp_tls_security_level: may
+mailserver_smtp_tls_ciphers: medium
+mailserver_smtpd_tls_mandatory_ciphers: high
+mailserver_smtpd_tls_mandatory_protocols: "!SSLv2, !SSLv3"
+mailserver_smtpd_tls_protocols: "!SSLv2, !SSLv3"
+mailserver_smtpd_tls_exclude_ciphers: aNULL
+mailserver_smtpd_tls_loglevel: 5

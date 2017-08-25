@@ -14,4 +14,12 @@
   with_items:
     - postfix
     - dovecot
+- name: main.cfファイルを配置
+  template:
+    src: main.j2.cf
+    dest: /etc/postfix/main.cf
+- name: master.cfファイルを配置
+  template:
+    src: master.j2.cf
+    dest: /etc/postfix/master.cf
 
