@@ -18,8 +18,24 @@
   template:
     src: main.j2.cf
     dest: /etc/postfix/main.cf
+  notify:
+    - Postfixサービスの再起動
 - name: master.cfファイルを配置
   template:
     src: master.j2.cf
     dest: /etc/postfix/master.cf
+  notify:
+    - Postfixサービスの再起動
+#- name: Firewalldでメールサーバーで使用するポートを公開状態に設定
+#  firewalld:
+#    port: "{{ item }}/tcp"
+#    permanent: true
+#    state: enabled
+#  with_items:
+#    - 25
+#    - 143
+#    - 465
+#    - 587
+#  notify:
+#    - Firewalldサービスの再起動
 
