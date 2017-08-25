@@ -26,6 +26,24 @@
     dest: /etc/postfix/master.cf
   notify:
     - Postfixサービスの再起動
+- name: 10-auth.confファイルを配置
+  template:
+    src: 10-auth.j2.conf
+    dest: /etc/dovecot/conf.d/10-auth.cf
+  notify:
+    - Dovecotサービスの再起動
+- name: 10-master.confファイルを配置
+  template:
+    src: 10-master.j2.conf
+    dest: /etc/dovecot/conf.d/10-master.cf
+  notify:
+    - Dovecotサービスの再起動
+- name: 10-ssl.confファイルを配置
+  template:
+    src: 10-ssl.j2.conf
+    dest: /etc/dovecot/conf.d/10-ssl.cf
+  notify:
+    - Dovecotサービスの再起動
 #- name: Firewalldでメールサーバーで使用するポートを公開状態に設定
 #  firewalld:
 #    port: "{{ item }}/tcp"
