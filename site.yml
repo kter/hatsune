@@ -10,6 +10,7 @@
     - role: geerlingguy.jenkins
     - role: geerlingguy.ruby
     - role: geerlingguy.git
+    - role: geerlingguy.certbot
       become: true
   tasks:
     - name: pcapのライブラリをインストール
