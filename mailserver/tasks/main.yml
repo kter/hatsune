@@ -29,19 +29,19 @@
 - name: 10-auth.confファイルを配置
   template:
     src: 10-auth.j2.conf
-    dest: /etc/dovecot/conf.d/10-auth.cf
+    dest: /etc/dovecot/conf.d/10-auth.conf
   notify:
     - Dovecotサービスの再起動
 - name: 10-master.confファイルを配置
   template:
     src: 10-master.j2.conf
-    dest: /etc/dovecot/conf.d/10-master.cf
+    dest: /etc/dovecot/conf.d/10-master.conf
   notify:
     - Dovecotサービスの再起動
 - name: 10-ssl.confファイルを配置
   template:
     src: 10-ssl.j2.conf
-    dest: /etc/dovecot/conf.d/10-ssl.cf
+    dest: /etc/dovecot/conf.d/10-ssl.conf
   notify:
     - Dovecotサービスの再起動
 - name: aliasesファイルを配置
