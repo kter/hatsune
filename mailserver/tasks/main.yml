@@ -6,14 +6,6 @@
     - postfix
     - dovecot-core
     - dovecot-imapd
-- name: メールサーバ起動と自動起動の有効化
-  service:
-    name: "{{ item }}"
-    state: started
-    enabled: true
-  with_items:
-    - postfix
-    - dovecot
 - name: main.cfファイルを配置
   template:
     src: main.j2.cf
@@ -26,6 +18,40 @@
     dest: /etc/postfix/master.cf
   notify:
     - Postfixサービスの再起動
+- name: 10-auth.confファイルを配置
+  template:
+    src: 10-auth.j2.conf
+    dest: /etc/dovecot/conf.d/10-auth.conf
+  notify:
+    - Dovecotサービスの再起動
+- name: 10-master.confファイルを配置
+  template:
+    src: 10-master.j2.conf
+    dest: /etc/dovecot/conf.d/10-master.conf
+  notify:
+    - Dovecotサービスの再起動
+- name: 10-ssl.confファイルを配置
+  template:
+    src: 10-ssl.j2.conf
+    dest: /etc/dovecot/conf.d/10-ssl.conf
+  notify:
+    - Dovecotサービスの再起動
+- name: aliasesファイルを配置
+  lineinfile:
+    dest: /etc/aliases
+    line: "{{ item.user }}: {{ item.alias }}"
+    regexp: "^{{ item.user }}:"
+  with_items: '{{aliases}}'
+  notify:
+    - aliases再構築
+- name: メールサーバ起動と自動起動の有効化
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  with_items:
+    - postfix
+    - dovecot
 #- name: Firewalldでメールサーバーで使用するポートを公開状態に設定
 #  firewalld:
 #    port: "{{ item }}/tcp"

@@ -35,6 +35,7 @@ smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_una
 myhostname = {{ mailserver_hostname }}
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
+mydomain =  {{ mailserver_domain }}
 myorigin = $mydomain
 mydestination = {{ mailserver_mydestination }}
 relayhost = 

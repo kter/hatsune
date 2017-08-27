@@ -7,4 +7,11 @@
   service:
     name: postfix
     state: restarted
+- name: Dovecotサービスの再起動
+  service:
+    name: dovecot
+    state: restarted
+- name: aliases再構築
+  command: newaliases
+  notify: Postfixサービスの再起動
 
