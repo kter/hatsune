@@ -6,6 +6,8 @@
     - postfix
     - dovecot-core
     - dovecot-imapd
+    - sasl2-bin
+    - libsasl2-modules
 - name: main.cfファイルを配置
   template:
     src: main.j2.cf
@@ -18,12 +20,17 @@
     dest: /etc/postfix/master.cf
   notify:
     - Postfixサービスの再起動
+- name: smtpd.confファイルを配置
+  template:
+    src: smtpd.j2.conf
+    dest: /etc/postfix/sasl/smtpd.conf
+  notify:
+    - Postfixサービスの再起動
 - name: 10-auth.confファイルを配置
   template:
     src: 10-auth.j2.conf
     dest: /etc/dovecot/conf.d/10-auth.conf
-  notify:
-    - Dovecotサービスの再起動
+  notify: Dovecotサービスの再起動
 - name: 10-master.confファイルを配置
   template:
     src: 10-master.j2.conf
@@ -44,6 +51,25 @@
   with_items: '{{aliases}}'
   notify:
     - aliases再構築
+- name: saslauthdのディレクトリ有無確認
+  stat: path=/var/spool/postfix/var/run/saslauthd
+  register: result
+- name: saslauthdのディレクトリを作成
+  command: dpkg-statoverride --add root sasl 710 /var/spool/postfix/var/run/saslauthd
+  when: result.stat.isdir is not defined
+  notify: saslauthdサービスの再起動
+- name: postfixユーザをsaslauthdグループに追加
+  user:
+    name: postfix
+    groups: sasl,postfix
+    append: true
+  notify: saslauthdサービスの再起動
+- name: saslauthdファイルを配置
+  template:
+    src: saslauthd.j2
+    dest: /etc/default/saslauthd-postfix
+  notify:
+    - Dovecotサービスの再起動
 - name: メールサーバ起動と自動起動の有効化
   service:
     name: "{{ item }}"

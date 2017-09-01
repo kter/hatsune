@@ -5,8 +5,10 @@
     - java_packages: openjdk-8-jdk
     - jenkins_plugins:
       - slack
+    - jenkins_admin_password: ********
     - mailserver_smtpd_banner: $myhostname ESMTP yudeazuki
     - mailserver_domain: kter.jp
+    - mailserver_hostname: mail-stg.kter.jp
   roles:
     - role: geerlingguy.java
     - role: geerlingguy.jenkins

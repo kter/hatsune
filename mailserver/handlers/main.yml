@@ -14,4 +14,8 @@
 - name: aliases再構築
   command: newaliases
   notify: Postfixサービスの再起動
+- name: saslauthdサービスの再起動
+  service:
+    name: saslauthd
+    state: restarted
 

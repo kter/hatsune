@@ -31,14 +31,27 @@ smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
 # See /usr/share/doc/postfix/TLS_README.gz in the postfix-doc package for
 # information on enabling SSL in the smtp client.
 
+# saslauthd
+smtpd_sasl_type = dovecot
+smtpd_sasl_local_domain = $myhostname
+smtpd_sasl_auth_enable = yes
+broken_sasl_auth_clients = yes
+smtpd_sasl_security_options = noanonymous
+smtpd_recipient_restrictions = permit_sasl_authenticated, permit_mynetworks, reject_unauth_destination
+
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_sasl_security_options = noanonymous
+# saslauthd
+
 smtpd_relay_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
+#smtpd_recipient_restrictions = permit_mynetworks permit_sasl_authenticated defer_unauth_destination
 myhostname = {{ mailserver_hostname }}
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
 mydomain =  {{ mailserver_domain }}
 myorigin = $mydomain
 mydestination = {{ mailserver_mydestination }}
-relayhost = 
 mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
 mailbox_size_limit = 0
 recipient_delimiter = +
